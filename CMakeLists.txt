@@ -50,6 +50,9 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(r_motion)
 
+find_package(PkgConfig)
+pkg_search_module(gtk+3 REQUIRED IMPORTED_TARGET gtk+-3.0)
+
 add_library(
     r_vss
     include/r_vss/r_motion_engine.h
@@ -92,6 +95,7 @@ target_link_libraries(
     r_storage
     r_utils
     ${GST_LIBS}
+    gtk-3
 )
 
 #add_subdirectory(ut)
