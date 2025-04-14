@@ -52,6 +52,8 @@ FetchContent_MakeAvailable(r_motion)
 
 find_package(PkgConfig)
 pkg_search_module(gtk+3 REQUIRED IMPORTED_TARGET gtk+-3.0)
+pkg_search_module(gtk+3 REQUIRED IMPORTED_TARGET glib-2.0)
+
 
 add_library(
     r_vss
@@ -96,6 +98,7 @@ target_link_libraries(
     r_utils
     ${GST_LIBS}
     gtk-3
+    glib-2.0
 )
 
 #add_subdirectory(ut)
