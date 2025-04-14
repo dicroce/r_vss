@@ -82,7 +82,7 @@ void r_stream_keeper::start()
         this
     );
 
-    _rtsp_server_th = thread(&r_stream_keeper::_rtsp_server_entry_point, this);
+//    _rtsp_server_th = thread(&r_stream_keeper::_rtsp_server_entry_point, this);
 
     _th = thread(&r_stream_keeper::_entry_point, this);
 
