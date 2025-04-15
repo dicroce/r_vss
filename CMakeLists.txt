@@ -64,10 +64,6 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(r_http)
 
-#find_package(PkgConfig)
-#pkg_search_module(gtk+3 REQUIRED IMPORTED_TARGET gtk+-3.0)
-#pkg_search_module(gtk+3 REQUIRED IMPORTED_TARGET glib-2.0)
-
 add_library(
     r_vss
     include/r_vss/r_motion_engine.h
