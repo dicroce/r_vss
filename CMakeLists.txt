@@ -12,6 +12,7 @@ FetchContent_Declare(
     r_utils
     GIT_REPOSITORY https://github.com/dicroce/r_utils.git
     GIT_TAG        main
+    FIND_PACKAGE_ARGS NAMES r_utils
 )
 FetchContent_MakeAvailable(r_utils)
 
@@ -19,6 +20,7 @@ FetchContent_Declare(
     r_storage
     GIT_REPOSITORY https://github.com/dicroce/r_storage.git
     GIT_TAG        main
+    FIND_PACKAGE_ARGS NAMES r_storage
 )
 FetchContent_MakeAvailable(r_storage)
 
@@ -26,6 +28,7 @@ FetchContent_Declare(
     r_disco
     GIT_REPOSITORY https://github.com/dicroce/r_disco.git
     GIT_TAG        main
+    FIND_PACKAGE_ARGS NAMES r_disco
 )
 FetchContent_MakeAvailable(r_disco)
 
@@ -33,6 +36,7 @@ FetchContent_Declare(
     r_av
     GIT_REPOSITORY https://github.com/dicroce/r_av.git
     GIT_TAG        main
+    FIND_PACKAGE_ARGS NAMES r_av
 )
 FetchContent_MakeAvailable(r_av)
 
@@ -40,6 +44,7 @@ FetchContent_Declare(
     r_pipeline
     GIT_REPOSITORY https://github.com/dicroce/r_pipeline.git
     GIT_TAG        main
+    FIND_PACKAGE_ARGS NAMES r_pipeline
 )
 FetchContent_MakeAvailable(r_pipeline)
 
@@ -47,13 +52,13 @@ FetchContent_Declare(
     r_motion
     GIT_REPOSITORY https://github.com/dicroce/r_motion.git
     GIT_TAG        main
+    FIND_PACKAGE_ARGS NAMES r_motion
 )
 FetchContent_MakeAvailable(r_motion)
 
 find_package(PkgConfig)
 pkg_search_module(gtk+3 REQUIRED IMPORTED_TARGET gtk+-3.0)
 pkg_search_module(gtk+3 REQUIRED IMPORTED_TARGET glib-2.0)
-
 
 add_library(
     r_vss
@@ -73,19 +78,8 @@ add_library(
 
 target_include_directories(
     r_vss PUBLIC
-    include
-    ${r_utils_SOURCE_DIR}/include
-    ${r_storage_SOURCE_DIR}/include
-    ${r_disco_SOURCE_DIR}/include
-    ${r_av_SOURCE_DIR}/include
-    ${r_pipeline_SOURCE_DIR}/include
-    ${r_motion_SOURCE_DIR}/include
-    ${GST_INCLUDE_DIRS}
-)
-
-target_link_directories(
-    r_vss PUBLIC
-    ${GST_LIB_DIRS}
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
 )
 
 target_link_libraries(
@@ -102,3 +96,5 @@ target_link_libraries(
 )
 
 #add_subdirectory(ut)
+
+configure_dev_package("r_vss" "A C++ library that hosts a video recoder and motion engine.")

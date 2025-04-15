@@ -342,10 +342,14 @@ void r_stream_keeper::_entry_point()
 
 void r_stream_keeper::_rtsp_server_entry_point()
 {
+    GMainContext* context = g_main_context_new();
+    g_main_context_push_thread_default(context);
     while(_running)
     {
-        g_main_context_iteration(NULL, true);
+        g_main_context_iteration(context, true);
     }
+    g_main_context_pop_thread_default(context);
+    g_main_context_unref(context);
 }
 
 vector<r_camera> r_stream_keeper::_get_current_cameras()
