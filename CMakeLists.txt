@@ -56,9 +56,17 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(r_motion)
 
-find_package(PkgConfig)
-pkg_search_module(gtk+3 REQUIRED IMPORTED_TARGET gtk+-3.0)
-pkg_search_module(gtk+3 REQUIRED IMPORTED_TARGET glib-2.0)
+FetchContent_Declare(
+    r_http
+    GIT_REPOSITORY https://github.com/dicroce/r_http.git
+    GIT_TAG        main
+    FIND_PACKAGE_ARGS NAMES r_http
+)
+FetchContent_MakeAvailable(r_http)
+
+#find_package(PkgConfig)
+#pkg_search_module(gtk+3 REQUIRED IMPORTED_TARGET gtk+-3.0)
+#pkg_search_module(gtk+3 REQUIRED IMPORTED_TARGET glib-2.0)
 
 add_library(
     r_vss
@@ -89,6 +97,7 @@ target_link_libraries(
     r_av
     r_disco
     r_storage
+    r_http
     r_utils
     ${GST_LIBS}
     gtk-3
