@@ -96,7 +96,6 @@ target_link_libraries(
     r_http
     r_utils
     ${GST_LIBS}
-    gtk-3
     glib-2.0
 )
 
