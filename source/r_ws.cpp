@@ -93,6 +93,8 @@ vector<uint8_t> r_ws::get_jpg(const std::string& camera_id, std::chrono::system_
 
     auto frame = bt["frames"][0]["data"].get();
 
+    R_LOG_ERROR("frame size: %d", (int)frame.size());
+
     r_video_decoder decoder(r_av::encoding_to_av_codec_id(video_codec_name));
     decoder.set_extradata(r_pipeline::get_video_codec_extradata(video_codec_name, video_codec_parameters));
     decoder.attach_buffer(frame.data(), frame.size());
