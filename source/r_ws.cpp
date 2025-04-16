@@ -99,6 +99,7 @@ vector<uint8_t> r_ws::get_jpg(const std::string& camera_id, std::chrono::system_
     decoder.set_extradata(r_pipeline::get_video_codec_extradata(video_codec_name, video_codec_parameters));
     decoder.attach_buffer(frame.data(), frame.size());
     auto ds = decoder.decode();
+    ds = decoder.flush();
     if(ds == R_CODEC_STATE_HAS_OUTPUT)
     {
         auto decoded = decoder.get(AV_PIX_FMT_YUV420P, w, h);
