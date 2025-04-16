@@ -99,6 +99,10 @@ target_link_libraries(
     glib-2.0
 )
 
+option(BUILD_INSTALL_DEV_PACKAGES "Install dev packages for subprojects" OFF)
+
 #add_subdirectory(ut)
 
-configure_dev_package("r_vss" "A C++ library that hosts a video recoder and motion engine.")
+if(PROJECT_IS_TOP_LEVEL OR BUILD_INSTALL_DEV_PACKAGES)
+    configure_dev_package("r_vss" "A C++ library that hosts a video recoder and motion engine.")
+endif()
