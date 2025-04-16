@@ -97,17 +97,27 @@ void r_stream_keeper::stop()
     for(auto& s : _streams)
         s.second->stop();
 
+    R_LOG_ERROR("Stopping motion engine...");
     _motionEngine.stop();
+    R_LOG_ERROR("Motion engine stopped");
 
     _running = false;
 
+    R_LOG_ERROR("Quitting main loop...");
     g_main_loop_quit(_loop);
+    R_LOG_ERROR("Main loop quit");
 
+    R_LOG_ERROR("Joining stream keeper thread...");
     _th.join();
+    R_LOG_ERROR("Stream keeper thread joined");
 
+    R_LOG_ERROR("Joining rtsp server thread...");
     _rtsp_server_th.join();
+    R_LOG_ERROR("Rtsp server thread joined");
 
+    R_LOG_ERROR("Stopping prune...");
     _prune.stop();
+    R_LOG_ERROR("Prune stopped");
 }
 
 vector<r_stream_status> r_stream_keeper::fetch_stream_status()
@@ -346,7 +356,10 @@ void r_stream_keeper::_rtsp_server_entry_point()
     g_main_context_push_thread_default(context);
     while(_running)
     {
-        g_main_context_iteration(context, true);
+        while (g_main_context_pending(context))
+            g_main_context_iteration(context, false);
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
     g_main_context_pop_thread_default(context);
     g_main_context_unref(context);
